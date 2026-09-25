@@ -263,6 +263,15 @@ button {
 }
 
 
+
+/* =========================================================
+   MOBILE-ONLY CERTIFICATION LINK
+========================================================= */
+
+.mobile-certification {
+    display: none !important;
+}
+
 /* =========================================================
    HERO
 ========================================================= */
@@ -2525,84 +2534,148 @@ button {
 
     /* =====================================================
        MOBILE NAVIGATION
+       DESKTOP = normal links
+       MOBILE  = 3-line hamburger only
     ===================================================== */
 
     .navbar {
+        position: relative;
         height: 62px;
     }
 
     .nav-links,
     .nav-contact {
-        display: none;
+        display: none !important;
     }
 
     .menu-button {
+        display: flex !important;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        margin: 0;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        border: 0;
+        border-radius: 12px;
+        background: transparent;
+        cursor: pointer;
+        flex-shrink: 0;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+
+    .menu-button span {
         display: block;
+        width: 23px;
+        height: 2px;
+        margin: 3px 0;
+        background: var(--ink);
+        border-radius: 999px;
+        transition:
+            transform 0.25s ease,
+            opacity 0.2s ease;
+    }
+
+    .menu-button[aria-expanded="true"] span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .menu-button[aria-expanded="true"] span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-button[aria-expanded="true"] span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .menu-button:focus-visible {
+        outline: 2px solid var(--ink);
+        outline-offset: 3px;
     }
 
     .nav-links.mobile-open {
-        display: flex;
-
+        display: flex !important;
         position: absolute;
-
         left: 16px;
         right: 16px;
-
         top: 72px;
-
+        z-index: 9999;
         flex-direction: column;
-
         align-items: stretch;
-
         gap: 0;
-
-        background:
-            rgba(
-                251,
-                250,
-                247,
-                0.96
-            );
-
-        border:
-            1px solid var(--line);
-
-        border-radius: 20px;
-
+        max-height: calc(100vh - 95px);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
         padding: 10px;
-
-        box-shadow:
-            0 20px 50px rgba(0, 0, 0, 0.12);
-
-        backdrop-filter:
-            blur(18px);
-
-        -webkit-backdrop-filter:
-            blur(18px);
+        background: rgba(251, 250, 247, 0.97);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
     }
 
     .nav-links.mobile-open a {
+        display: flex;
+        width: 100%;
+        min-height: 50px;
+        align-items: center;
+        justify-content: space-between;
+        box-sizing: border-box;
         padding: 15px;
-
         border-radius: 12px;
-    }
-
-    .nav-links.mobile-open a::after {
-        left: 15px;
-        bottom: 8px;
-
-        width: 0;
-    }
-
-    .nav-links.mobile-open a.active::after {
-        width:
-            calc(100% - 30px);
     }
 
     .nav-links.mobile-open a:hover {
         background: #efede7;
     }
 
+    .nav-links.mobile-open a::after {
+        left: 15px;
+        bottom: 8px;
+        width: 0;
+    }
+
+    .nav-links.mobile-open a.active::after {
+        width: calc(100% - 30px);
+    }
+
+    .nav-links.mobile-open .mobile-certification {
+        display: flex !important;
+        border-top: 1px solid var(--line);
+        margin-top: 4px;
+        padding-top: 17px;
+    }
+
+    .nav-links.mobile-open .mobile-certification span {
+        margin-left: auto;
+        font-size: 16px;
+    }
+
+    body.mobile-menu-open {
+        overflow: hidden;
+    }
+
+    /* =====================================================
+       SMALL MOBILE NAVIGATION
+    ===================================================== */
+
+    .nav-links.mobile-open {
+        left: 10px;
+        right: 10px;
+        top: 68px;
+        border-radius: 18px;
+        padding: 8px;
+    }
+
+    .nav-links.mobile-open a {
+        min-height: 48px;
+        padding: 14px 13px;
+        font-size: 12px;
+    }
 
     /* =====================================================
        HERO
@@ -4122,5 +4195,1961 @@ img {
     .image-protection-text {
         font-size: 14px;
     }
+
+}
+/* =========================================================
+   MOBILE NAVIGATION — REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .menu-button span {
+        transition: none;
+    }
+}
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root {
+
+    --ink: #171717;
+    --muted: #6f6f6f;
+    --paper: #fbfaf7;
+    --white: #ffffff;
+    --line: #dedbd4;
+    --dark: #171717;
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+
+}
+
+
+html {
+
+    scroll-behavior: smooth;
+
+}
+
+
+body {
+
+    background: var(--paper);
+
+    color: var(--ink);
+
+    font-family:
+        "DM Sans",
+        Arial,
+        sans-serif;
+
+    line-height: 1.6;
+
+    overflow-x: hidden;
+
+}
+
+
+body.mobile-menu-open {
+
+    overflow: hidden;
+
+}
+
+
+img {
+
+    max-width: 100%;
+
+    display: block;
+
+    -webkit-user-drag: none;
+
+    -webkit-touch-callout: none;
+
+}
+
+
+a {
+
+    color: inherit;
+
+    text-decoration: none;
+
+}
+
+
+button {
+
+    font: inherit;
+
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.container {
+
+    width:
+        min(
+            calc(100% - 48px),
+            1180px
+        );
+
+    margin-inline: auto;
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header {
+
+    position: relative;
+
+    z-index: 1000;
+
+    background: var(--paper);
+
+}
+
+
+.navbar {
+
+    height: 82px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.logo {
+
+    display: flex;
+
+    align-items: center;
+
+    flex-shrink: 0;
+
+}
+
+
+.logo-image {
+
+    width: 48px;
+
+    height: 48px;
+
+    object-fit: contain;
+
+}
+
+
+/* =========================================================
+   DESKTOP NAVIGATION
+========================================================= */
+
+.nav-links {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 34px;
+
+    margin-left: auto;
+
+    margin-right: 40px;
+
+}
+
+
+.nav-links a {
+
+    position: relative;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: var(--ink);
+
+    padding: 8px 0;
+
+}
+
+
+.nav-links a::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+
+    bottom: 0;
+
+    width: 0;
+
+    height: 2px;
+
+    background: var(--ink);
+
+    transition:
+        width 0.25s ease;
+
+}
+
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+
+    width: 100%;
+
+}
+
+
+/* =========================================================
+   DESKTOP GET IN TOUCH
+========================================================= */
+
+.nav-contact {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding:
+        11px
+        16px;
+
+    border:
+        1px solid var(--ink);
+
+    border-radius: 999px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease;
+
+}
+
+
+.nav-contact span {
+
+    font-size: 15px;
+
+}
+
+
+.nav-contact:hover {
+
+    background: var(--ink);
+
+    color: var(--white);
+
+}
+
+
+/* =========================================================
+   MOBILE CONTACT LINK
+========================================================= */
+
+.mobile-contact-link {
+
+    display: none !important;
+
+}
+
+
+/* =========================================================
+   MOBILE MENU BUTTON
+========================================================= */
+
+.menu-button {
+
+    display: none;
+
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.cert-hero {
+
+    min-height: 620px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding:
+        90px
+        0
+        110px;
+
+}
+
+
+.cert-hero-content {
+
+    max-width: 850px;
+
+}
+
+
+.eyebrow {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 28px;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.16em;
+
+}
+
+
+.eyebrow span {
+
+    width: 8px;
+
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: var(--ink);
+
+}
+
+
+.cert-hero h1 {
+
+    max-width: 850px;
+
+    margin-bottom: 28px;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(
+            54px,
+            8vw,
+            110px
+        );
+
+    font-weight: 500;
+
+    line-height: 0.98;
+
+    letter-spacing: -0.045em;
+
+}
+
+
+.cert-hero h1 em {
+
+    font-style: italic;
+
+}
+
+
+.hero-description {
+
+    max-width: 690px;
+
+    color: var(--muted);
+
+    font-size: 16px;
+
+    line-height: 1.8;
+
+}
+
+
+.hero-buttons {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 28px;
+
+    margin-top: 38px;
+
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    min-height: 50px;
+
+    padding:
+        0
+        22px;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.02em;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease;
+
+}
+
+
+.button:hover {
+
+    transform: translateY(-2px);
+
+}
+
+
+.button-dark {
+
+    background: var(--dark);
+
+    color: var(--white);
+
+}
+
+
+.button-light {
+
+    background: var(--white);
+
+    color: var(--dark);
+
+}
+
+
+.simple-link {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+}
+
+
+.simple-link span {
+
+    font-size: 16px;
+
+}
+
+
+/* =========================================================
+   MARQUEE
+========================================================= */
+
+.marquee-divider {
+
+    width: 100%;
+
+    overflow: hidden;
+
+    border-top:
+        1px solid var(--line);
+
+    border-bottom:
+        1px solid var(--line);
+
+    padding:
+        18px 0;
+
+}
+
+
+.marquee-track {
+
+    width: max-content;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 24px;
+
+    white-space: nowrap;
+
+    animation:
+        marquee 28s linear infinite;
+
+}
+
+
+.marquee-track span {
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.13em;
+
+}
+
+
+.marquee-track b {
+
+    font-size: 12px;
+
+}
+
+
+@keyframes marquee {
+
+    from {
+
+        transform: translateX(0);
+
+    }
+
+    to {
+
+        transform: translateX(-50%);
+
+    }
+
+}
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+.diploma-section,
+.cert-section {
+
+    padding:
+        120px
+        0;
+
+}
+
+
+.section-number {
+
+    margin-bottom: 32px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.14em;
+
+}
+
+
+.cert-section-header {
+
+    max-width: 850px;
+
+    margin-bottom: 65px;
+
+}
+
+
+.cert-section-header h2 {
+
+    margin-bottom: 25px;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(
+            42px,
+            6vw,
+            76px
+        );
+
+    font-weight: 500;
+
+    line-height: 1;
+
+    letter-spacing: -0.04em;
+
+}
+
+
+.cert-section-header h2 em {
+
+    font-style: italic;
+
+}
+
+
+.work-intro-text {
+
+    max-width: 650px;
+
+    color: var(--muted);
+
+    font-size: 15px;
+
+    line-height: 1.8;
+
+}
+
+
+/* =========================================================
+   DIPLOMAS
+========================================================= */
+
+.diploma-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap: 30px;
+
+}
+
+
+.diploma-card {
+
+    overflow: hidden;
+
+    border:
+        1px solid var(--line);
+
+    background: var(--white);
+
+}
+
+
+.diploma-photo {
+
+    position: relative;
+
+    aspect-ratio: 4 / 3;
+
+    overflow: hidden;
+
+    background: #eeeeea;
+
+}
+
+
+.diploma-photo img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    transition:
+        transform 0.5s ease;
+
+}
+
+
+.diploma-card:hover
+.diploma-photo img {
+
+    transform: scale(1.025);
+
+}
+
+
+.diploma-tag {
+
+    position: absolute;
+
+    left: 18px;
+
+    top: 18px;
+
+    padding:
+        7px
+        10px;
+
+    background: var(--white);
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.08em;
+
+}
+
+
+.diploma-info {
+
+    padding: 25px;
+
+}
+
+
+.diploma-info h3 {
+
+    margin-bottom: 8px;
+
+    font-size: 19px;
+
+    line-height: 1.35;
+
+}
+
+
+.diploma-info p {
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+}
+
+
+/* =========================================================
+   EXPAND BUTTON
+========================================================= */
+
+.expand-btn {
+
+    position: absolute;
+
+    right: 16px;
+
+    bottom: 16px;
+
+    width: 42px;
+
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border: 0;
+
+    border-radius: 50%;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.94
+        );
+
+    color: var(--ink);
+
+    cursor: pointer;
+
+    font-size: 20px;
+
+    transition:
+        transform 0.25s ease;
+
+}
+
+
+.expand-btn:hover {
+
+    transform: scale(1.08);
+
+}
+
+
+/* =========================================================
+   CERTIFICATION GROUP
+========================================================= */
+
+.cert-group {
+
+    margin-top: 80px;
+
+}
+
+
+.cert-group-heading {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 25px;
+
+    font-size: 15px;
+
+    font-weight: 800;
+
+}
+
+
+.cert-group-count {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 34px;
+
+    height: 34px;
+
+    border:
+        1px solid var(--line);
+
+    border-radius: 50%;
+
+    font-size: 10px;
+
+}
+
+
+/* =========================================================
+   CERTIFICATE GRID
+========================================================= */
+
+.cert-photo-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
+        );
+
+    gap: 25px;
+
+}
+
+
+.cert-photo-grid-small {
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
+        );
+
+}
+
+
+.cert-photo-card {
+
+    min-width: 0;
+
+}
+
+
+.cert-photo {
+
+    position: relative;
+
+    aspect-ratio: 4 / 3;
+
+    overflow: hidden;
+
+    background: #eeeeea;
+
+    border:
+        1px solid var(--line);
+
+}
+
+
+.cert-photo-card--portrait
+.cert-photo {
+
+    aspect-ratio: 3 / 4;
+
+}
+
+
+.cert-photo img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    transition:
+        transform 0.5s ease;
+
+}
+
+
+.cert-photo-card:hover
+.cert-photo img {
+
+    transform: scale(1.025);
+
+}
+
+
+.cert-photo-info {
+
+    padding:
+        18px
+        0;
+
+}
+
+
+.cert-photo-info h4 {
+
+    margin-bottom: 7px;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+}
+
+
+.cert-photo-info p {
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    line-height: 1.6;
+
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.contact {
+
+    padding:
+        40px 0
+        120px;
+
+}
+
+
+.contact-box {
+
+    position: relative;
+
+    overflow: hidden;
+
+    min-height: 420px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    padding:
+        70px;
+
+    background: var(--dark);
+
+    color: var(--white);
+
+}
+
+
+.eyebrow.light {
+
+    color: rgba(
+        255,
+        255,
+        255,
+        0.65
+    );
+
+}
+
+
+.contact-box h2 {
+
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 700px;
+
+    margin-bottom: 35px;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(
+            45px,
+            6vw,
+            80px
+        );
+
+    font-weight: 500;
+
+    line-height: 1;
+
+    letter-spacing: -0.04em;
+
+}
+
+
+.contact-box h2 em {
+
+    font-style: italic;
+
+}
+
+
+.contact-action {
+
+    position: relative;
+
+    z-index: 3;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 15px;
+
+}
+
+
+.email-reveal {
+
+    display: none;
+
+}
+
+
+.email-reveal.active {
+
+    display: block;
+
+}
+
+
+.email-button {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding:
+        12px
+        17px;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.25
+        );
+
+    border-radius: 999px;
+
+    color: var(--white);
+
+    font-size: 12px;
+
+}
+
+
+.email-address {
+
+    word-break: break-word;
+
+}
+
+
+.email-arrow {
+
+    margin-left: 5px;
+
+}
+
+
+.contact-circle {
+
+    position: absolute;
+
+    width: 330px;
+
+    height: 330px;
+
+    right: -100px;
+
+    bottom: -140px;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.15
+        );
+
+    border-radius: 50%;
+
+}
+
+
+/* =========================================================
+   LIGHTBOX
+========================================================= */
+
+.photo-lightbox {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 10000;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 30px;
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            0.92
+        );
+
+}
+
+
+.photo-lightbox.active {
+
+    display: flex;
+
+}
+
+
+.lightbox-close {
+
+    position: fixed;
+
+    top: 22px;
+
+    right: 22px;
+
+    z-index: 10001;
+
+    width: 44px;
+
+    height: 44px;
+
+    border: 0;
+
+    border-radius: 50%;
+
+    background: var(--white);
+
+    color: var(--ink);
+
+    cursor: pointer;
+
+    font-weight: 800;
+
+}
+
+
+.lightbox-content {
+
+    max-width: 1100px;
+
+    max-height: 90vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+.lightbox-content img {
+
+    max-width: 100%;
+
+    max-height: 78vh;
+
+    width: auto;
+
+    height: auto;
+
+    object-fit: contain;
+
+}
+
+
+.lightbox-content p {
+
+    margin-top: 15px;
+
+    color: var(--white);
+
+    text-align: center;
+
+    font-size: 13px;
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding:
+        25px 0
+        35px;
+
+    border-top:
+        1px solid var(--line);
+
+}
+
+
+.footer p {
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+}
+
+
+.footer a {
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+}
+
+
+/* =========================================================
+   REVEAL
+========================================================= */
+
+.reveal {
+
+    opacity: 1;
+
+}
+
+
+/* =========================================================
+   MOBILE NAVIGATION
+   850px AND BELOW
+========================================================= */
+
+@media (max-width: 850px) {
+
+
+    /* -----------------------------------------------------
+       CONTAINER
+    ----------------------------------------------------- */
+
+    .container {
+
+        width:
+            min(
+                calc(100% - 32px),
+                620px
+            );
+
+    }
+
+
+    /* -----------------------------------------------------
+       NAVBAR
+    ----------------------------------------------------- */
+
+    .navbar {
+
+        position: relative;
+
+        height: 62px;
+
+    }
+
+
+    /* -----------------------------------------------------
+       HIDE DESKTOP LINKS
+    ----------------------------------------------------- */
+
+    .nav-links,
+    .nav-contact {
+
+        display: none !important;
+
+    }
+
+
+    /* -----------------------------------------------------
+       MENU BUTTON
+    ----------------------------------------------------- */
+
+    .menu-button {
+
+        display: flex !important;
+
+        width: 44px;
+
+        height: 44px;
+
+        padding: 0;
+
+        margin: 0;
+
+        align-items: center;
+
+        justify-content: center;
+
+        flex-direction: column;
+
+        border: 0;
+
+        border-radius: 12px;
+
+        background: transparent;
+
+        color: var(--ink);
+
+        cursor: pointer;
+
+        flex-shrink: 0;
+
+        -webkit-tap-highlight-color: transparent;
+
+        touch-action: manipulation;
+
+    }
+
+
+    /* -----------------------------------------------------
+       THREE HAMBURGER LINES
+    ----------------------------------------------------- */
+
+    .menu-button span {
+
+        display: block;
+
+        width: 23px;
+
+        height: 2px;
+
+        margin: 3px 0;
+
+        background: var(--ink);
+
+        border-radius: 999px;
+
+        transition:
+            transform 0.25s ease,
+            opacity 0.2s ease;
+
+    }
+
+
+    /* -----------------------------------------------------
+       3 LINES → X
+    ----------------------------------------------------- */
+
+    .menu-button[aria-expanded="true"]
+    span:nth-child(1) {
+
+        transform:
+            translateY(8px)
+            rotate(45deg);
+
+    }
+
+
+    .menu-button[aria-expanded="true"]
+    span:nth-child(2) {
+
+        opacity: 0;
+
+    }
+
+
+    .menu-button[aria-expanded="true"]
+    span:nth-child(3) {
+
+        transform:
+            translateY(-8px)
+            rotate(-45deg);
+
+    }
+
+
+    /* -----------------------------------------------------
+       DROPDOWN
+    ----------------------------------------------------- */
+
+    .nav-links.mobile-open {
+
+        display: flex !important;
+
+        position: absolute;
+
+        left: 16px;
+
+        right: 16px;
+
+        top: 72px;
+
+        z-index: 9999;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 0;
+
+        max-height:
+            calc(
+                100vh - 95px
+            );
+
+        overflow-y: auto;
+
+        overscroll-behavior: contain;
+
+        -webkit-overflow-scrolling: touch;
+
+        padding: 10px;
+
+        background:
+            rgba(
+                251,
+                250,
+                247,
+                0.97
+            );
+
+        border:
+            1px solid
+            var(--line);
+
+        border-radius: 20px;
+
+        box-shadow:
+            0
+            20px
+            50px
+            rgba(
+                0,
+                0,
+                0,
+                0.12
+            );
+
+        backdrop-filter:
+            blur(18px);
+
+        -webkit-backdrop-filter:
+            blur(18px);
+
+    }
+
+
+    /* -----------------------------------------------------
+       DROPDOWN HOME
+    ----------------------------------------------------- */
+
+    .nav-links.mobile-open > a {
+
+        display: flex !important;
+
+        width: 100%;
+
+        min-height: 50px;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        box-sizing: border-box;
+
+        padding: 15px;
+
+        border-radius: 12px;
+
+        color: var(--ink);
+
+        font-size: 13px;
+
+        font-weight: 600;
+
+    }
+
+
+    .nav-links.mobile-open > a:hover {
+
+        background: #efede7;
+
+    }
+
+
+    /* -----------------------------------------------------
+       ACTIVE UNDERLINE
+    ----------------------------------------------------- */
+
+    .nav-links.mobile-open > a::after {
+
+        left: 15px;
+
+        bottom: 8px;
+
+        width: 0;
+
+    }
+
+
+    .nav-links.mobile-open > a.active::after {
+
+        width:
+            calc(
+                100% - 30px
+            );
+
+    }
+
+
+    /* -----------------------------------------------------
+       MOBILE GET IN TOUCH
+    ----------------------------------------------------- */
+
+    .nav-links.mobile-open
+    .mobile-contact-link {
+
+        display: flex !important;
+
+        margin-top: 4px;
+
+        border-top:
+            1px solid
+            var(--line);
+
+        border-radius: 0 0 12px 12px;
+
+        padding-top: 17px;
+
+    }
+
+
+    .nav-links.mobile-open
+    .mobile-contact-link span {
+
+        margin-left: auto;
+
+        font-size: 16px;
+
+    }
+
+
+    /* -----------------------------------------------------
+       HERO
+    ----------------------------------------------------- */
+
+    .cert-hero {
+
+        min-height: auto;
+
+        padding:
+            85px
+            0
+            80px;
+
+    }
+
+
+    .cert-hero h1 {
+
+        font-size:
+            clamp(
+                48px,
+                15vw,
+                72px
+            );
+
+    }
+
+
+    .hero-description {
+
+        font-size: 14px;
+
+    }
+
+
+    .hero-buttons {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 18px;
+
+    }
+
+
+    /* -----------------------------------------------------
+       DIPLOMAS
+    ----------------------------------------------------- */
+
+    .diploma-section,
+    .cert-section {
+
+        padding:
+            80px
+            0;
+
+    }
+
+
+    .cert-section-header {
+
+        margin-bottom: 45px;
+
+    }
+
+
+    .cert-section-header h2 {
+
+        font-size:
+            clamp(
+                40px,
+                11vw,
+                60px
+            );
+
+    }
+
+
+    .diploma-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    /* -----------------------------------------------------
+       CERTIFICATES
+    ----------------------------------------------------- */
+
+    .cert-photo-grid,
+    .cert-photo-grid-small {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+
+    }
+
+
+    /* -----------------------------------------------------
+       CONTACT
+    ----------------------------------------------------- */
+
+    .contact {
+
+        padding:
+            20px
+            0
+            80px;
+
+    }
+
+
+    .contact-box {
+
+        min-height: 390px;
+
+        padding:
+            45px 30px;
+
+    }
+
+
+    .contact-box h2 {
+
+        font-size:
+            clamp(
+                42px,
+                11vw,
+                62px
+            );
+
+    }
+
+
+    /* -----------------------------------------------------
+       FOOTER
+    ----------------------------------------------------- */
+
+    .footer {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 560px) {
+
+
+    .container {
+
+        width:
+            calc(
+                100% - 24px
+            );
+
+    }
+
+
+    /* -----------------------------------------------------
+       MOBILE DROPDOWN
+    ----------------------------------------------------- */
+
+    .nav-links.mobile-open {
+
+        left: 10px;
+
+        right: 10px;
+
+        top: 68px;
+
+        border-radius: 18px;
+
+        padding: 8px;
+
+    }
+
+
+    .nav-links.mobile-open > a {
+
+        min-height: 48px;
+
+        padding:
+            14px
+            13px;
+
+        font-size: 12px;
+
+    }
+
+
+    /* -----------------------------------------------------
+       HERO
+    ----------------------------------------------------- */
+
+    .cert-hero {
+
+        padding-top: 70px;
+
+    }
+
+
+    .cert-hero h1 {
+
+        font-size:
+            clamp(
+                45px,
+                15vw,
+                62px
+            );
+
+    }
+
+
+    .hero-description {
+
+        font-size: 13px;
+
+        line-height: 1.75;
+
+    }
+
+
+    /* -----------------------------------------------------
+       CERTIFICATE GRID
+    ----------------------------------------------------- */
+
+    .cert-photo-grid,
+    .cert-photo-grid-small {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    /* -----------------------------------------------------
+       DIPLOMA
+    ----------------------------------------------------- */
+
+    .diploma-info {
+
+        padding: 20px;
+
+    }
+
+
+    .diploma-info h3 {
+
+        font-size: 17px;
+
+    }
+
+
+    /* -----------------------------------------------------
+       CONTACT
+    ----------------------------------------------------- */
+
+    .contact-box {
+
+        padding:
+            40px
+            22px;
+
+    }
+
+
+    .email-button {
+
+        max-width: 100%;
+
+    }
+
+
+    .email-address {
+
+        font-size: 10px;
+
+    }
+
 
 }

@@ -77,30 +77,165 @@ document
 
 /* =========================================================
    MOBILE MENU
+   3-LINE HAMBURGER
 ========================================================= */
+
+function openMobileMenu() {
+
+    navLinks?.classList.add(
+        "mobile-open"
+    );
+
+    menuButton?.setAttribute(
+        "aria-expanded",
+        "true"
+    );
+
+    menuButton?.setAttribute(
+        "aria-label",
+        "Close navigation"
+    );
+
+    document.body.classList.add(
+        "mobile-menu-open"
+    );
+
+}
+
+
+function closeMobileMenu() {
+
+    navLinks?.classList.remove(
+        "mobile-open"
+    );
+
+    menuButton?.setAttribute(
+        "aria-expanded",
+        "false"
+    );
+
+    menuButton?.setAttribute(
+        "aria-label",
+        "Open navigation"
+    );
+
+    document.body.classList.remove(
+        "mobile-menu-open"
+    );
+
+}
+
 
 menuButton?.addEventListener(
     "click",
-    () => {
+    event => {
 
-        const open =
+        event.stopPropagation();
+
+        const isOpen =
             menuButton.getAttribute(
                 "aria-expanded"
             ) === "true";
 
 
-        menuButton.setAttribute(
-            "aria-expanded",
-            String(!open)
-        );
+        if (isOpen) {
 
+            closeMobileMenu();
 
-        navLinks?.classList.toggle(
-            "mobile-open",
-            !open
-        );
+        } else {
+
+            openMobileMenu();
+
+        }
 
     }
+);
+
+
+/* Close after selecting any navigation item. */
+navLinks
+    ?.querySelectorAll("a")
+    .forEach(link => {
+
+        link.addEventListener(
+            "click",
+            () => {
+
+                closeMobileMenu();
+
+            }
+        );
+
+    });
+
+
+/* Close when clicking outside the navbar. */
+document.addEventListener(
+    "click",
+    event => {
+
+        if (
+            !navLinks?.classList.contains(
+                "mobile-open"
+            )
+        ) {
+            return;
+        }
+
+        const target =
+            event.target;
+
+        if (
+            target instanceof Element &&
+            !target.closest(".navbar")
+        ) {
+
+            closeMobileMenu();
+
+        }
+
+    },
+    true
+);
+
+
+/* Close with Escape. */
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Escape" &&
+            navLinks?.classList.contains(
+                "mobile-open"
+            )
+        ) {
+
+            closeMobileMenu();
+
+            menuButton?.focus();
+
+        }
+
+    }
+);
+
+
+/* Restore desktop navbar when leaving mobile width. */
+window.addEventListener(
+    "resize",
+    () => {
+
+        if (
+            window.innerWidth > 850
+        ) {
+
+            closeMobileMenu();
+
+        }
+
+    },
+    { passive: true }
 );
 
 
@@ -217,7 +352,6 @@ if (year) {
 
 /* =========================================================
    CONTACT
-   START A CONVERSATION → SHOW EMAIL
 ========================================================= */
 
 const startConversationBtn =
@@ -519,50 +653,11 @@ if (
    ========================================================= */
 
 
-/*
-    IMPORTANT:
-
-    Hindi lang certificates ang protected.
-
-    LAHAT ng <img> sa page ay protected.
-
-    Kasama:
-
-    index.html
-    ----------------
-    profile.png
-    mybranding.png
-    experience-1.jpg
-    experience-2.jpg
-    experience-3.jpg
-    experience-4.jpg
-    experience-5.jpg
-    experience-landscape-1.jpg
-    experience-landscape-2.jpg
-    experience-landscape-3.jpg
-    experience-landscape-4.jpg
-    lightboxImage
-
-    certifications.html
-    -------------------
-    certificate images
-    diploma images
-    award images
-    lightbox images
-    at iba pang <img>
-*/
-
-
 /* =========================================================
    SHOW IMAGE PROTECTION MESSAGE
 ========================================================= */
 
 function showImageProtectionMessage() {
-
-    /*
-        Kung may existing popup,
-        huwag gumawa ng maraming popup.
-    */
 
     const existingMessage =
         document.querySelector(
@@ -576,8 +671,6 @@ function showImageProtectionMessage() {
 
     }
 
-
-    /* Create popup */
 
     const message =
         document.createElement("div");
@@ -633,10 +726,6 @@ function showImageProtectionMessage() {
     );
 
 
-    /*
-        Animate popup
-    */
-
     requestAnimationFrame(() => {
 
         message.classList.add(
@@ -645,10 +734,6 @@ function showImageProtectionMessage() {
 
     });
 
-
-    /*
-        Close button
-    */
 
     const closeButton =
         message.querySelector(
@@ -661,10 +746,6 @@ function showImageProtectionMessage() {
         closeImageProtectionMessage
     );
 
-
-    /*
-        Automatically close after 4 seconds
-    */
 
     setTimeout(() => {
 
@@ -721,10 +802,6 @@ function isProtectedImage(target) {
     }
 
 
-    /*
-        Direct IMG element
-    */
-
     if (
         target instanceof HTMLImageElement
     ) {
@@ -733,11 +810,6 @@ function isProtectedImage(target) {
 
     }
 
-
-    /*
-        If clicked inside a protected
-        image/card/container
-    */
 
     if (
         target instanceof Element
@@ -778,19 +850,11 @@ function protectAllImages() {
 
     images.forEach(img => {
 
-        /*
-            Prevent dragging
-        */
-
         img.setAttribute(
             "draggable",
             "false"
         );
 
-
-        /*
-            Extra HTML protection
-        */
 
         img.setAttribute(
             "ondragstart",
@@ -798,20 +862,12 @@ function protectAllImages() {
         );
 
 
-        /*
-            Disable selection
-        */
-
         img.style.userSelect =
             "none";
 
         img.style.webkitUserSelect =
             "none";
 
-
-        /*
-            Prevent drag
-        */
 
         img.addEventListener(
             "dragstart",
@@ -827,10 +883,6 @@ function protectAllImages() {
             true
         );
 
-
-        /*
-            Prevent right click directly
-        */
 
         img.addEventListener(
             "contextmenu",
@@ -850,10 +902,6 @@ function protectAllImages() {
             true
         );
 
-
-        /*
-            Prevent middle mouse
-        */
 
         img.addEventListener(
             "mousedown",
@@ -895,21 +943,6 @@ document.addEventListener(
         if (
             isProtectedImage(target)
         ) {
-
-            /*
-                IMPORTANT:
-
-                This prevents the browser's
-                normal right-click menu.
-
-                So users cannot get:
-
-                Save Image As
-                Open Image in New Tab
-                Copy Image
-                Copy Image Address
-                etc.
-            */
 
             event.preventDefault();
 
@@ -1091,11 +1124,6 @@ document.addEventListener(
             event.metaKey;
 
 
-        /* -----------------------------------------
-           CTRL + S
-           CMD + S
-        ----------------------------------------- */
-
         if (
             modifier &&
             key === "s"
@@ -1111,11 +1139,6 @@ document.addEventListener(
 
         }
 
-
-        /* -----------------------------------------
-           CTRL + SHIFT + S
-           CMD + SHIFT + S
-        ----------------------------------------- */
 
         if (
             modifier &&
@@ -1133,10 +1156,6 @@ document.addEventListener(
 
         }
 
-
-        /* -----------------------------------------
-           CTRL + C / CMD + C
-        ----------------------------------------- */
 
         if (
             modifier &&
